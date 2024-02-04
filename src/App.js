@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import CaptureImagePage from "./pages/CaptureImagePage";
+import KnowMorePage from "./pages/KnowMorePage";
+import AvatarPage from "./pages/AvatarPage";
+import GeneratedImagePage from "./pages/GeneratedImagePage";
+import SelectGender from "./pages/SelectGender";
 
-function App() {
+export default function App() {
+  const [capturedImage, setCapturedImg] = useState();
+  const [generatedImage, setGeneratedImage] = useState();
+  const [selectedGender, setSelectedGender] = useState();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/select-gender"
+          element={
+            <SelectGender
+              setSelectedGender={setSelectedGender}
+              selectedGender={selectedGender}
+            />
+          }
+        />
+        <Route
+          path="/capture-image"
+          element={<CaptureImagePage setCapturedImg={setCapturedImg} />}
+        />
+        <Route path="/know-more" element={<KnowMorePage />} />
+        <Route
+          path="/avatar"
+          element={
+            <AvatarPage
+              capturedImage={capturedImage}
+              setGeneratedImage={setGeneratedImage}
+              selectedGender={selectedGender}
+              generatedImage={generatedImage}
+            />
+          }
+        />
+        <Route
+          path="/generated-image"
+          element={
+            <GeneratedImagePage
+              generatedImage={generatedImage}
+              selectedGender={selectedGender}
+            />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
